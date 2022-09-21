@@ -3,9 +3,28 @@ import React, { useReducer } from "react";
 
 const CardReducer = (state, action) => {
   if (action.type === "ADD_ITEM") {
-    const updatedItems = state.items.concat(action.value);
     const updatedTotalAmount =
       state.totalAmount + action.value.price * action.value.amount;
+    //Pronadjem index itema ako postoji item sa tim ID-em
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.value.id
+    );
+    const existingCartItem = state.items[existingCartItemIndex];
+    let updatedItems;
+
+    //Ako postoji item, napravi objekat updated item, gde samo preuzmemo vec postojeci i povecamo broj za amount
+    if (existingCartItem) {
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.value.amount,
+      };
+      //Preuzmemo listu itema i na taj index dodamo novi item (item sa novim amountom)
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      //Ako ne postoji samo dodamo u niz novi item
+      updatedItems = state.items.concat(action.value);
+    }
     return { items: updatedItems, totalAmount: updatedTotalAmount };
   }
   return { items: [], totalAmount: 0 };
