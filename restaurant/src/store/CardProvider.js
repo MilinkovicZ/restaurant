@@ -1,10 +1,11 @@
-import CardContext, { useReducer } from "./cart-context.js";
+import CardContext from "./cart-context.js";
+import React, { useReducer } from "react";
 
 const CardReducer = (state, action) => {
   if (action.type === "ADD_ITEM") {
-    const updatedItems = state.items.concat(action.item);
+    const updatedItems = state.items.concat(action.value);
     const updatedTotalAmount =
-      state.totalAmount + action.item.price * action.item.amount;
+      state.totalAmount + action.value.price * action.value.amount;
     return { items: updatedItems, totalAmount: updatedTotalAmount };
   }
   return { items: [], totalAmount: 0 };
