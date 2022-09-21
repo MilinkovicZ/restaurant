@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./MealsText.module.css";
 
-const MealsSummary = () => {
+const MealsText = () => {
   return (
     <section className={styles.summary}>
       <h2>Delicious Food, Delivered To You</h2>
@@ -17,4 +17,4 @@ const MealsSummary = () => {
   );
 };
 
-export default MealsSummary;
+export default MealsText;

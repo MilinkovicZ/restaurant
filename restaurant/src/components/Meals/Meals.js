@@ -1,11 +1,11 @@
 import React from "react";
-import MealsData from "./MealsData";
-import MealsSummary from "./MealsText";
+import MealsData from "./MealsData.js";
+import MealsText from "./MealsText.js";
 
 function Meals() {
   return (
     <React.Fragment>
-      <MealsSummary />
+      <MealsText />
       <MealsData />
     </React.Fragment>
   );

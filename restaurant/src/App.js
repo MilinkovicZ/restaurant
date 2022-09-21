@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Layout/Header.js";
 import Meals from "./components/Meals/Meals.js";
+import Cart from "./components/Cart/Cart.js";
 
 function App() {
+  const [isShowed, setIsShowed] = useState(false);
+
+  const showCardHandler = () => {
+    setIsShowed(true);
+  };
+
+  const hideCardHandler = () => {
+    setIsShowed(false);
+  };
+
   return (
     <React.Fragment>
+      {isShowed && <Cart />}
       <Header />
       <main>
         <Meals />
