@@ -25,9 +25,36 @@ const CardReducer = (state, action) => {
       //Ako ne postoji samo dodamo u niz novi item
       updatedItems = state.items.concat(action.value);
     }
+
     return { items: updatedItems, totalAmount: updatedTotalAmount };
+  } else if (action.type === "REMOVE_ITEM") {
+    //Pronadjemo item sa tim ID-em
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.value
+    );
+    const existingCartItem = state.items[existingCartItemIndex];
+    const updatedTotalAmount = state.totalAmount - existingCartItem.price;
+    let updatedItems;
+    //Ako je poslednji, onda brisemo iz karte
+    if (existingCartItem.amount === 1) {
+      updatedItems = state.items.filter((item) => item.id !== action.value);
+    } else {
+      //Ako nije, kao i gore preuzmemo taj item i promenimo mu amount i stavimo ga u niz na to ID mesto
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount - 1,
+      };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    }
+
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount,
+    };
+  } else {
+    return { items: [], totalAmount: 0 };
   }
-  return { items: [], totalAmount: 0 };
 };
 
 function CardProvider(props) {
