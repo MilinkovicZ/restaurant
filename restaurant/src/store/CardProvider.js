@@ -52,6 +52,8 @@ const CardReducer = (state, action) => {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
     };
+  } else if (action.type === "EMPTY_CART") {
+    return { items: [], totalAmount: 0 };
   } else {
     return { items: [], totalAmount: 0 };
   }
@@ -71,11 +73,16 @@ function CardProvider(props) {
     dispatchCartAction({ type: "REMOVE_ITEM", value: id });
   };
 
+  const emptyCart = () => {
+    dispatchCartAction({ type: "EMPTY_CART" });
+  };
+
   const cardContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    emptyCart: emptyCart,
   };
 
   return (
